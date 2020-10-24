@@ -126,7 +126,7 @@ function merge(arena, player) {
 	});
 }
 
-function playerDrop() {
+function playerFall() {
 	player.pos.y++;
 	if (collide(arena, player)) {
 		player.pos.y--;
@@ -137,6 +137,21 @@ function playerDrop() {
 	}
 	dropCounter = 0;
 }
+
+function playerDrop() {
+	while(!collide(arena, player))
+	{
+		player.pos.y++;
+	}
+	player.pos.y--;
+	merge(arena, player);
+	playerReset();
+	arenaSweep();
+	updateScore();
+	dropCounter = 0;
+}
+
+//function player
 
 function playerMove(dir) {
 	player.pos.x += dir;
@@ -203,7 +218,7 @@ function update(time = 0) {
 
 	dropCounter += deltaTime;
 	if(dropCounter > dropInterval) {
-		playerDrop();
+		playerFall();
 	}
 
 	draw();
@@ -241,13 +256,16 @@ document.addEventListener('keydown', event => {
 			playerMove(1);
 		}
 		else if (event.keyCode === 40) {
-			playerDrop();
+			playerFall();
 		}
 		else if (event.keyCode === 81) {
 			playerRotate(-1);
 		}
-		else if (event.keyCode === 69) {
+		else if (event.keyCode === 38 || event.keyCode === 69) {
 			playerRotate(1);
+		}
+		else if (event.keyCode === 32) {
+			playerDrop();
 		}
 })
 playerReset();
