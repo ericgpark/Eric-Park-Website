@@ -410,6 +410,11 @@ section {
   background: #fff;
 }
 
+.count-box-inner {
+  display: flex;
+  justify-content: center;
+}
+
 .facts .count-box i {
   position: absolute;
   top: -25px;
